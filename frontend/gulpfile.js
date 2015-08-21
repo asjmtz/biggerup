@@ -11,26 +11,28 @@ var named = require('vinyl-named')
 
 
 var appList = ['main']
-
+var distPath = '../backend/static'
 
 gulp.task('default', ['bundle'], function() {
+
     gulp.src( './index.html' )
-        .pipe( gulp.dest( 'dist/' ) );
-	console.log('done')
+        .pipe( gulp.dest( distPath ) );
 })
 
 gulp.task('bundle', function() {
+
+	console.log(__dirname)
 	return gulp.src(mapFiles(appList, 'js'))
 		.pipe(named())
 		.pipe(webpack(getConfig()))
-		.pipe(gulp.dest('dist/'))
+		.pipe(gulp.dest(distPath))
 })
 
 gulp.task('watch', ['default'],function() {
 	return gulp.src(mapFiles(appList, 'js'))
 		.pipe(named())
 		.pipe(webpack(getConfig({watch: true})))
-		.pipe(gulp.dest('dist/'))
+		.pipe(gulp.dest(distPath))
 })
 
 
@@ -57,7 +59,6 @@ function getConfig(opt) {
         },
 		devtool: 'source-map',
 		output : {
-            publicPath        : './',
         },
 	}
 	if (!opt) {

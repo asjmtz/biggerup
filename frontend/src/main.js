@@ -3,7 +3,10 @@ var VueRouter = require('vue-router')
 
 Vue.use(VueRouter)
 
-var router = new VueRouter();
+var router = new VueRouter({
+  history: true,
+  saveScrollPosition: true
+});
 
 var App = require('./app.vue');
 
@@ -13,6 +16,10 @@ router.map({
     },
     '/bar': {
         component: require( './page/bar.vue' )
-    }
+    },
+    // not found handler
+    '*': {
+      component: require('./page/not-found.vue')
+    },
 })
 router.start(App, '#app')
